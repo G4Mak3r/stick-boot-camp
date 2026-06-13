@@ -19,6 +19,7 @@ export class Visualizer {
     this.particles = [];
     this.maxParticles = 360;
     this.resize();
+    this.idleSeed = Math.random() * 1000;
   }
 
   resize() {
@@ -45,6 +46,12 @@ export class Visualizer {
     for (let i = 0; i < 24; i++) this.spawn(x, y, 1.1, palettes[this.preset][i % 4]);
   }
 
+  burst(x = this.cx, y = this.cy, energy = 1.5) {
+    const pal = palettes[this.preset];
+    for (let i = 0; i < Math.floor(70 * energy); i++) this.spawn(x, y, energy, pal[i % pal.length]);
+    this.pointer.x = x; this.pointer.y = y; this.pointer.pulse = 1;
+  }
+
   spawn(x, y, energy, color) {
     if (this.particles.length > this.maxParticles) this.particles.splice(0, this.particles.length - this.maxParticles);
     const a = Math.random() * TAU;
@@ -68,6 +75,7 @@ export class Visualizer {
     ctx.fillStyle = bg; ctx.fillRect(0, 0, this.w, this.h);
 
     this.drawBackdrop(ctx, audio, pal, glow);
+    this.drawIdleMotion(ctx, audio, pal, glow);
     if (this.preset === 'nebula') this.drawNebula(ctx, audio, pal, glow);
     if (this.preset === 'rings') this.drawRings(ctx, audio, pal, glow);
     if (this.preset === 'tunnel') this.drawTunnel(ctx, audio, pal, glow);
@@ -76,6 +84,26 @@ export class Visualizer {
 
     this.updateParticles(ctx, audio, dt, pal, glow);
     this.drawVignette(ctx);
+  }
+
+  drawIdleMotion(ctx, audio, pal, glow) {
+    // Всегда заметная анимация, даже если микрофон Samsung отдает почти тишину.
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    const bands = 18;
+    for (let i = 0; i < bands; i++) {
+      const y = this.h * (i + 0.5) / bands;
+      const amp = 8 + audio.level * 28 + Math.sin(this.t * 1.3 + i) * 4;
+      ctx.beginPath();
+      for (let x = -20; x <= this.w + 20; x += 28) {
+        const yy = y + Math.sin(x * .012 + this.t * (0.8 + i * .017) + i * .7) * amp;
+        if (x < 0) ctx.moveTo(x, yy); else ctx.lineTo(x, yy);
+      }
+      ctx.strokeStyle = hexAlpha(pal[i % pal.length], (0.018 + audio.level * .035) * glow);
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    ctx.restore();
   }
 
   drawBackdrop(ctx, audio, pal, glow) {
