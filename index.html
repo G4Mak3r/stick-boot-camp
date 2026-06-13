@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#050611" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Neon Visualizer" />
+  <title>Neon Audio Visualizer</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="visualizer" aria-label="Музыкальный визуализатор"></canvas>
+
+  <div id="grain"></div>
+
+  <main id="ui" class="ui">
+    <section id="startPanel" class="glass panel start-panel">
+      <div class="brand">
+        <div class="orb-logo" aria-hidden="true"></div>
+        <div>
+          <h1>NEON<br><span>AUDIO VISUALIZER</span></h1>
+          <p>AMOLED music-reactive canvas для Samsung Tab. Микрофон, неон, частицы, волны и жесты.</p>
+        </div>
+      </div>
+
+      <div class="start-actions">
+        <button id="micBtn" class="primary">🎙 Включить микрофон</button>
+        <button id="demoBtn" class="secondary">✨ Демо-режим</button>
+      </div>
+
+      <p class="hint">Для микрофона открывай через HTTPS: GitHub Pages подходит. Если браузер спросит разрешение — нажми «Разрешить».</p>
+    </section>
+
+    <header class="topbar glass">
+      <div class="status">
+        <strong id="modeLabel">IDLE</strong>
+        <span id="levelLabel">level 0%</span>
+      </div>
+      <div class="ticker" id="ticker">TAP • CLAP • PLAY MUSIC NEAR THE TABLET • SWIPE TO CHANGE PRESET</div>
+      <button id="hideBtn" class="icon-btn" aria-label="Скрыть интерфейс">◎</button>
+    </header>
+
+    <nav class="dock glass">
+      <button class="preset active" data-preset="nebula">Nebula</button>
+      <button class="preset" data-preset="rings">Rings</button>
+      <button class="preset" data-preset="tunnel">Tunnel</button>
+      <button class="preset" data-preset="bars">Bars</button>
+      <button class="preset" data-preset="aurora">Aurora</button>
+    </nav>
+
+    <aside class="controls glass">
+      <label>
+        Sensitivity
+        <input id="sensitivity" type="range" min="0.5" max="3" value="1.25" step="0.05" />
+      </label>
+      <label>
+        Glow
+        <input id="glow" type="range" min="0" max="1" value="0.75" step="0.01" />
+      </label>
+      <label>
+        Particles
+        <input id="particles" type="range" min="0.2" max="1" value="0.85" step="0.01" />
+      </label>
+    </aside>
+
+    <button id="wakeBtn" class="wake hidden">Показать интерфейс</button>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
