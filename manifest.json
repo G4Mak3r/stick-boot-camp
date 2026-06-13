@@ -1,14 +1,1 @@
-{
-  "name": "Neon Audio Visualizer",
-  "short_name": "NeonViz",
-  "description": "AMOLED music-reactive visualizer for tablets and phones.",
-  "start_url": "./",
-  "scope": "./",
-  "display": "fullscreen",
-  "orientation": "any",
-  "background_color": "#050611",
-  "theme_color": "#050611",
-  "icons": [
-    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
-  ]
-}
+{"name":"Neon Audio Visualizer","short_name":"NeonViz","description":"Canvas music visualizer for tablets.","start_url":"./?v=4","scope":"./","display":"fullscreen","orientation":"any","background_color":"#03040b","theme_color":"#03040b","icons":[{"src":"icons/icon.svg","sizes":"any","type":"image/svg+xml"}]}

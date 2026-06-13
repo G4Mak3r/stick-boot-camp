@@ -1,77 +1,69 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-  <meta name="theme-color" content="#050611" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Neon Visualizer" />
-  <title>Neon Audio Visualizer</title>
-  <link rel="manifest" href="./manifest.json?v=3" />
-  <link rel="stylesheet" href="./style.css?v=3" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#03040b">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Neon Audio Visualizer V4</title>
+  <link rel="manifest" href="./manifest.json?v=4">
+  <link rel="stylesheet" href="./style.css?v=4">
 </head>
 <body>
-  <canvas id="visualizer" aria-label="Музыкальный визуализатор"></canvas>
-
-  <div id="grain"></div>
+  <canvas id="visualizer"></canvas>
+  <div class="noise"></div>
 
   <main id="ui" class="ui">
-    <section id="startPanel" class="glass panel start-panel">
-      <div class="brand">
-        <div class="orb-logo" aria-hidden="true"></div>
+    <section id="startPanel" class="panel glass">
+      <div class="hero">
+        <div class="orb" id="orb"></div>
         <div>
-          <h1>NEON<br><span>AUDIO VISUALIZER</span></h1>
-          <p>AMOLED music-reactive canvas для Samsung Tab. Микрофон, неон, частицы, волны и жесты.</p>
+          <h1>NEON<br><span>AUDIO</span></h1>
+          <p>Живой музыкальный визуализатор для Samsung Tab. Canvas должен двигаться сразу. Микрофон усиливает реакцию на музыку.</p>
         </div>
       </div>
-
-      <div class="start-actions">
+      <div class="actions">
         <button id="micBtn" class="primary">🎙 Включить микрофон</button>
-        <button id="demoBtn" class="secondary">✨ Демо-режим</button>
-        <button id="pulseBtn" class="secondary">⚡ Проверить canvas</button>
+        <button id="demoBtn">✨ Демо-режим</button>
+        <button id="testBtn">⚡ Тест canvas</button>
       </div>
-
-      <p class="hint">Для микрофона открывай через HTTPS: GitHub Pages подходит. Если браузер спросит разрешение — нажми «Разрешить».</p>
+      <p class="small">Если видишь номер кадров ниже и движущиеся линии — canvas работает. Если только этот серый шар — GitHub показывает старый кеш или JS-файлы не загружены.</p>
     </section>
 
-    <header class="topbar glass">
-      <div class="status">
-        <strong id="modeLabel">IDLE</strong>
-        <span id="levelLabel">level 0%</span><span id="debugLabel">boot</span>
+    <header class="top glass">
+      <div class="readout">
+        <b id="mode">BOOT</b>
+        <span id="level">level 0%</span>
+        <span id="debug">loading scripts...</span>
       </div>
-      <div class="ticker" id="ticker">TAP • CLAP • PLAY MUSIC NEAR THE TABLET • SWIPE TO CHANGE PRESET</div>
-      <button id="hideBtn" class="icon-btn" aria-label="Скрыть интерфейс">◎</button>
+      <div class="marquee" id="marquee">CLAP • PLAY MUSIC • SWIPE • TAP • NEON VISUALIZER V4</div>
+      <button id="hideBtn" class="round">◎</button>
     </header>
 
     <nav class="dock glass">
       <button class="preset active" data-preset="nebula">Nebula</button>
       <button class="preset" data-preset="rings">Rings</button>
-      <button class="preset" data-preset="tunnel">Tunnel</button>
       <button class="preset" data-preset="bars">Bars</button>
+      <button class="preset" data-preset="tunnel">Tunnel</button>
       <button class="preset" data-preset="aurora">Aurora</button>
     </nav>
 
-    <aside class="controls glass">
-      <label>
-        Sensitivity
-        <input id="sensitivity" type="range" min="0.5" max="3" value="1.25" step="0.05" />
-      </label>
-      <label>
-        Glow
-        <input id="glow" type="range" min="0" max="1" value="0.75" step="0.01" />
-      </label>
-      <label>
-        Particles
-        <input id="particles" type="range" min="0.2" max="1" value="0.85" step="0.01" />
-      </label>
+    <aside class="sliders glass">
+      <label>Sensitivity <input id="sensitivity" type="range" min="0.4" max="3" step="0.05" value="1.35"></label>
+      <label>Glow <input id="glow" type="range" min="0" max="1" step="0.01" value="0.82"></label>
+      <label>Particles <input id="particles" type="range" min="0" max="1" step="0.01" value="0.78"></label>
     </aside>
 
-    <button id="wakeBtn" class="wake hidden">Показать интерфейс</button>
+    <button id="wakeBtn" class="wake">Показать UI</button>
   </main>
 
   <div id="toast" class="toast"></div>
+  <noscript><div class="fatal">Включи JavaScript. Без JS визуализатор не работает.</div></noscript>
 
-  <script type="module" src="./src/main.js?v=3"></script>
+  <script src="./src/audio.js?v=4" defer></script>
+  <script src="./src/visualizer.js?v=4" defer></script>
+  <script src="./src/main.js?v=4" defer></script>
 </body>
 </html>
