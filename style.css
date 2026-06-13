@@ -72,3 +72,9 @@ input[type="range"] { width: 100%; accent-color: var(--cyan); }
   .dock { max-width: calc(100vw - 20px); overflow-x: auto; bottom: 10px; }
   .preset { min-width: 78px; }
 }
+.status { width: 210px; }
+.status #debugLabel { color: rgba(255,255,255,.45); font-size: 10px; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#pulseBtn { background: rgba(98,255,185,.12); border: 1px solid rgba(98,255,185,.28); }
+body.mic-live .orb-logo { animation-duration: 1.15s; }
+body.demo-live .orb-logo { animation-duration: 1.9s; }
+@media (max-width: 760px), (orientation: portrait) { .status { width: 145px; } .status #debugLabel { display:none; } }

@@ -1,51 +1,77 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<meta name="theme-color" content="#03040b">
-<title>Neon Audio Visualizer Fixed</title>
-<style>
-:root{--cyan:#54f7ff;--pink:#ff4fd8;--violet:#8a6cff;--green:#60ffb7;--amber:#ffd36b;--bg:#03040b;--glass:rgba(7,10,23,.58);--line:rgba(140,220,255,.22);--text:rgba(245,250,255,.95);--muted:rgba(214,230,255,.65)}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#02030a;color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;touch-action:none;user-select:none;-webkit-user-select:none;overscroll-behavior:none}canvas{position:fixed;inset:0;width:100vw;height:100vh;display:block;background:#03040b;z-index:0}.noise{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.09;background-image:repeating-radial-gradient(circle at 22% 35%,rgba(255,255,255,.16) 0 1px,transparent 1px 6px);mix-blend-mode:screen}.ui{position:fixed;inset:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);z-index:5;pointer-events:none}.glass{pointer-events:auto;background:var(--glass);border:1px solid var(--line);box-shadow:0 20px 70px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.10);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}.start{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(820px,calc(100vw - 42px));padding:28px;border-radius:32px;transition:.35s ease}.start.hide{opacity:0;transform:translate(-50%,-45%) scale(.96);pointer-events:none}.brand{display:flex;gap:22px;align-items:center}.orb{width:116px;height:116px;border-radius:50%;flex:0 0 116px;background:radial-gradient(circle at 35% 25%,#fff 0 5%,var(--cyan) 10%,var(--violet) 36%,var(--pink) 58%,transparent 72%);box-shadow:0 0 38px rgba(84,247,255,.72),0 0 90px rgba(255,79,216,.32);animation:orb 2.2s infinite ease-in-out}.title{font-size:clamp(40px,7vw,80px);font-weight:950;letter-spacing:-.075em;line-height:.83;margin:0;text-shadow:0 0 34px rgba(84,247,255,.18)}.title span{color:var(--cyan);text-shadow:0 0 22px rgba(84,247,255,.8)}p{margin:8px 0 0;color:var(--muted);font-size:16px;line-height:1.45}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}button{border:0;color:var(--text);font-weight:900;letter-spacing:.01em;touch-action:manipulation}.primary,.secondary{min-height:58px;border-radius:20px;padding:0 22px;font-size:17px}.primary{color:#021018;background:linear-gradient(135deg,var(--cyan),var(--green) 45%,var(--violet));box-shadow:0 12px 45px rgba(84,247,255,.26)}.secondary{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}.top{position:absolute;left:14px;right:14px;top:14px;height:64px;border-radius:23px;display:flex;align-items:center;gap:16px;padding:0 14px 0 20px}.status{width:190px;line-height:1.1}.status b{display:block;color:var(--cyan);font-size:17px}.status span{font-size:12px;color:var(--muted);text-transform:uppercase}.ticker{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;letter-spacing:.16em;color:rgba(255,255,255,.74)}.icon{width:44px;height:44px;border-radius:16px;background:rgba(255,255,255,.09)}.dock{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);border-radius:26px;padding:10px;display:flex;gap:8px}.preset{height:46px;min-width:86px;border-radius:18px;background:transparent;color:rgba(255,255,255,.74);border:1px solid transparent}.preset.active{color:#031016;background:linear-gradient(135deg,var(--cyan),var(--green));box-shadow:0 0 26px rgba(84,247,255,.28)}.controls{position:absolute;right:14px;top:92px;width:246px;border-radius:24px;padding:16px;display:grid;gap:13px}.controls label{display:grid;gap:7px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.12em}.controls input{width:100%;accent-color:var(--cyan)}.toast{position:fixed;z-index:10;left:50%;top:92px;transform:translateX(-50%) translateY(-10px);opacity:0;pointer-events:none;border:1px solid var(--line);background:rgba(0,0,0,.55);backdrop-filter:blur(14px);padding:12px 18px;border-radius:999px;transition:.25s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.hiddenUi .top,.hiddenUi .dock,.hiddenUi .controls{opacity:0;pointer-events:none}.wake{display:none;position:absolute;right:16px;bottom:16px;border-radius:999px;min-height:48px;padding:0 18px;background:rgba(255,255,255,.10);border:1px solid var(--line)}.hiddenUi .wake{display:block}.hint{font-size:13px}.diag{margin-top:10px;font-size:12px;color:rgba(255,255,255,.55);font-family:ui-monospace,Consolas,monospace}@keyframes orb{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.05) rotate(10deg)}}@media(max-width:760px),(orientation:portrait){.brand{align-items:flex-start}.orb{width:78px;height:78px;flex-basis:78px}.start{padding:22px;border-radius:24px}.top{height:58px;top:10px;left:10px;right:10px}.controls{display:none}.dock{max-width:calc(100vw - 20px);overflow-x:auto;bottom:10px}.preset{min-width:78px}.ticker{display:none}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#050611" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Neon Visualizer" />
+  <title>Neon Audio Visualizer</title>
+  <link rel="manifest" href="./manifest.json?v=3" />
+  <link rel="stylesheet" href="./style.css?v=3" />
 </head>
 <body>
-<canvas id="c"></canvas><div class="noise"></div>
-<main id="ui" class="ui">
-<section id="start" class="glass start"><div class="brand"><div class="orb"></div><div><h1 class="title">NEON<br><span>AUDIO</span></h1><p>Музыкальный визуалайзер для Samsung Tab. Фон теперь всегда рисуется сразу; микрофон только добавляет реакцию на звук.</p></div></div><div class="actions"><button id="mic" class="primary">🎙 Включить микрофон</button><button id="demo" class="secondary">✨ Демо-режим</button><button id="boost" class="secondary">⚡ Force Pulse</button></div><p class="hint">Если микрофон разрешен, но звук не виден — включи музыку громче рядом с планшетом и подними Sensitivity. Через GitHub Pages HTTPS подходит.</p><div id="diag" class="diag">booting canvas…</div></section>
-<header class="glass top"><div class="status"><b id="mode">DEMO READY</b><span id="level">level 0%</span></div><div id="ticker" class="ticker">TAP SCREEN • SWIPE PRESET • PLAY MUSIC NEAR THE TABLET • CLAP TO TEST MIC</div><button id="hide" class="icon">◎</button></header>
-<nav class="glass dock"><button class="preset active" data-p="nebula">Nebula</button><button class="preset" data-p="rings">Rings</button><button class="preset" data-p="tunnel">Tunnel</button><button class="preset" data-p="bars">Bars</button><button class="preset" data-p="aurora">Aurora</button></nav>
-<aside class="glass controls"><label>Sensitivity<input id="sens" type="range" min="0.6" max="5" step="0.05" value="2.0"></label><label>Glow<input id="glow" type="range" min="0" max="1" step="0.01" value="0.8"></label><label>Particles<input id="parts" type="range" min="0.15" max="1" step="0.01" value="0.85"></label><label>Visual floor<input id="floor" type="range" min="0" max="0.7" step="0.01" value="0.22"></label></aside>
-<button id="wake" class="wake">Показать интерфейс</button>
-</main><div id="toast" class="toast"></div>
-<script>
-(()=>{const TAU=Math.PI*2,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const cv=$('#c'),ctx=cv.getContext('2d',{alpha:false});let W=1,H=1,CX=1,CY=1,DPR=1,t=0,last=performance.now(),preset=localStorage.nvPreset||'nebula',particles=[],touch={x:0,y:0,p:0,down:false},uiHidden=false;
-const pal={nebula:['#54f7ff','#8a6cff','#ff4fd8','#60ffb7'],rings:['#ffd36b','#54f7ff','#ff4fd8','#ffffff'],tunnel:['#60ffb7','#54f7ff','#8a6cff','#ff4fd8'],bars:['#54f7ff','#60ffb7','#ffd36b','#ff4fd8'],aurora:['#60ffb7','#54f7ff','#d8fff4','#8a6cff']};
-const audio={ctx:null,an:null,stream:null,freq:new Uint8Array(1024),time:new Uint8Array(2048),mode:'DEMO READY',demo:true,phase:0,level:0,bass:0,mid:0,treble:0};
-const st={sens:+(localStorage.nvSens||2),glow:+(localStorage.nvGlow||.8),parts:+(localStorage.nvParts||.85),floor:+(localStorage.nvFloor||.22)};$('#sens').value=st.sens;$('#glow').value=st.glow;$('#parts').value=st.parts;$('#floor').value=st.floor;
-function resize(){DPR=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;CX=W/2;CY=H/2;cv.width=Math.max(1,Math.floor(W*DPR));cv.height=Math.max(1,Math.floor(H*DPR));cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0)}resize();addEventListener('resize',resize);addEventListener('orientationchange',()=>setTimeout(resize,250));
-function toast(s){const e=$('#toast');e.textContent=s;e.classList.add('show');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),2600)}function diag(s){$('#diag').textContent=s}
-async function mic(){try{audio.ctx=audio.ctx||new(window.AudioContext||window.webkitAudioContext)({latencyHint:'interactive'});await audio.ctx.resume();audio.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:true},video:false});const src=audio.ctx.createMediaStreamSource(audio.stream);audio.an=audio.ctx.createAnalyser();audio.an.fftSize=2048;audio.an.smoothingTimeConstant=.72;audio.freq=new Uint8Array(audio.an.frequencyBinCount);audio.time=new Uint8Array(audio.an.fftSize);src.connect(audio.an);audio.demo=false;audio.mode='MIC LIVE';$('#start').classList.add('hide');toast('Микрофон включен. Хлопни рядом с планшетом.');diag('mic live: analyser connected');full()}catch(e){console.error(e);audio.demo=true;audio.mode='DEMO FALLBACK';toast('Микрофон не стартовал — включен демо-режим');diag('mic error: '+(e.name||e.message));$('#start').classList.add('hide')}}
-function demo(){audio.demo=true;audio.mode='DEMO SYNTH';$('#start').classList.add('hide');toast('Демо-режим включен');full()}function full(){document.documentElement.requestFullscreen?.().catch(()=>{})}
-function updateAudio(dt){if(audio.demo||!audio.an){audio.phase+=dt;const beat=Math.pow(Math.max(0,Math.sin(audio.phase*2.4)),8);for(let i=0;i<audio.freq.length;i++){const x=i/audio.freq.length;const bass=230*Math.exp(-x*20)*(.42+beat);const form=105*Math.exp(-((x-(.16+Math.sin(audio.phase*.39)*.05))/.06)**2);const hi=60*Math.max(0,Math.sin(audio.phase*9+i*.083));audio.freq[i]=Math.min(255,bass+form+hi+Math.random()*20)}for(let i=0;i<audio.time.length;i++){audio.time[i]=Math.max(0,Math.min(255,128+Math.sin(i*.043+audio.phase*6)*38+Math.sin(i*.011+audio.phase*2)*24))}}else{audio.an.getByteFrequencyData(audio.freq);audio.an.getByteTimeDomainData(audio.time)}const n=audio.freq.length,be=Math.max(8,Math.floor(n*.08)),me=Math.max(be+1,Math.floor(n*.34));let ab=0,am=0,at=0;for(let i=1;i<be;i++)ab+=audio.freq[i];for(let i=be;i<me;i++)am+=audio.freq[i];for(let i=me;i<n;i++)at+=audio.freq[i];audio.bass=Math.min(1,ab/(be-1)/255*st.sens*1.55);audio.mid=Math.min(1,am/(me-be)/255*st.sens*1.2);audio.treble=Math.min(1,at/(n-me)/255*st.sens*1.8);const raw=audio.bass*.5+audio.mid*.32+audio.treble*.18;audio.level+=(Math.max(st.floor,raw)-audio.level)*(1-Math.pow(.0008,dt));}
-function alpha(hex,a){const n=parseInt(hex.slice(1),16);return`rgba(${n>>16&255},${n>>8&255},${n&255},${a})`}function rr(x,y,w,h,r){ctx.beginPath();ctx.roundRect?ctx.roundRect(x,y,w,h,r):(ctx.rect(x,y,w,h));}
-function spawn(x,y,e=1,c=pal[preset][0]){if(particles.length>Math.floor(120+430*st.parts))particles.splice(0,particles.length-Math.floor(120+430*st.parts));const a=Math.random()*TAU,s=(40+Math.random()*360)*e;particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:.45+Math.random()*1.3,age:0,size:1+Math.random()*4.8,c})}
-function bg(P){ctx.globalCompositeOperation='source-over';let g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#03040b');g.addColorStop(.55,'#07091b');g.addColorStop(1,'#010208');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.globalCompositeOperation='lighter';for(let i=0;i<22;i++){let a=i/22*TAU+t*.06,r=Math.min(W,H)*(.16+.025*i+audio.bass*.05);ctx.fillStyle=alpha(P[i%4],.018+.022*Math.sin(t+i));ctx.beginPath();ctx.arc(CX+Math.cos(a)*r,CY+Math.sin(a*1.7)*r*.45,80+audio.level*120,0,TAU);ctx.fill()}}
-function nebula(P){ctx.save();ctx.translate(CX,CY);ctx.globalCompositeOperation='lighter';for(let i=0;i<172;i++){let f=audio.freq[Math.floor(i/172*audio.freq.length)]/255,a=i/172*TAU+t*.08,base=Math.min(W,H)*.13,len=base+f*Math.min(W,H)*.42+audio.bass*65;ctx.strokeStyle=alpha(P[i%4],.13+f*.75);ctx.lineWidth=1+f*6;ctx.shadowBlur=18*st.glow+f*35*st.glow;ctx.shadowColor=P[i%4];ctx.beginPath();ctx.moveTo(Math.cos(a)*base,Math.sin(a)*base);ctx.lineTo(Math.cos(a)*len,Math.sin(a)*len);ctx.stroke()}waveCircle(P[0],Math.min(W,H)*(.08+audio.bass*.07));ctx.restore()}
-function rings(P){ctx.save();ctx.translate(CX,CY);ctx.globalCompositeOperation='lighter';for(let k=0;k<10;k++){ctx.beginPath();let rr=Math.min(W,H)*(.08+k*.047+audio.bass*.055);for(let i=0;i<=220;i++){let a=i/220*TAU,f=audio.freq[(i*3+k*27)%audio.freq.length]/255,rad=rr+f*92+Math.sin(a*(3+k%5)+t*1.4+k)*8,x=Math.cos(a)*rad,y=Math.sin(a)*rad;if(!i)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.strokeStyle=alpha(P[k%4],.14+k*.025);ctx.lineWidth=1.3+audio.level*5;ctx.shadowBlur=20*st.glow;ctx.shadowColor=P[k%4];ctx.stroke()}ctx.restore()}
-function tunnel(P){ctx.save();ctx.translate(CX,CY);ctx.globalCompositeOperation='lighter';for(let k=42;k>=1;k--){let z=k/42,rot=t*(.22+audio.mid*.8)+k*.22,rad=z*Math.max(W,H)*.66*(1+audio.bass*.2);ctx.beginPath();for(let i=0;i<=6;i++){let a=i/6*TAU+rot,x=Math.cos(a)*rad*(1+Math.sin(t*3+k*.42+i)*.04),y=Math.sin(a)*rad*(1+Math.sin(t*3+k*.42+i)*.04);if(!i)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.strokeStyle=alpha(P[k%4],.035+(1-z)*.34+audio.level*.11);ctx.lineWidth=1+(1-z)*5;ctx.shadowBlur=16*st.glow;ctx.shadowColor=P[k%4];ctx.stroke()}ctx.restore()}
-function bars(P){ctx.save();ctx.globalCompositeOperation='lighter';let n=96,bw=W/n;for(let i=0;i<n;i++){let f=audio.freq[Math.floor(i/n*audio.freq.length)]/255,h=12+Math.pow(Math.max(f,st.floor*.45),1.32)*H*.75,x=i*bw,y=H-h-18,g=ctx.createLinearGradient(0,y,0,H);g.addColorStop(0,alpha(P[i%4],.95));g.addColorStop(1,alpha(P[(i+1)%4],.18));ctx.fillStyle=g;ctx.shadowBlur=18*st.glow;ctx.shadowColor=P[i%4];rr(x+3,y,Math.max(2,bw-6),h,8);ctx.fill()}waveLine(P[2],H*.36);ctx.restore()}
-function aurora(P){ctx.save();ctx.globalCompositeOperation='lighter';for(let b=0;b<6;b++){ctx.beginPath();let y0=H*(.25+b*.09);for(let x=-20;x<=W+20;x+=10){let idx=Math.max(0,Math.min(audio.freq.length-1,Math.floor(x/W*audio.freq.length))),f=audio.freq[idx]/255,y=y0+Math.sin(x*.009+t*(1.1+b*.12)+b)*(28+b*8)-Math.max(f,st.floor*.5)*130;if(x<0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.strokeStyle=alpha(P[b%4],.18+audio.mid*.35);ctx.lineWidth=16+b*5;ctx.shadowBlur=35*st.glow;ctx.shadowColor=P[b%4];ctx.stroke()}waveLine(P[1],H*.75);ctx.restore()}
-function waveCircle(c,r){ctx.beginPath();for(let i=0;i<=256;i++){let a=i/256*TAU,v=(audio.time[Math.floor(i/256*audio.time.length)]-128)/128,rad=r+v*70+audio.level*38,x=Math.cos(a)*rad,y=Math.sin(a)*rad;if(!i)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.closePath();ctx.strokeStyle=alpha(c,.7);ctx.lineWidth=2.4;ctx.stroke()}function waveLine(c,y){ctx.beginPath();for(let x=0;x<W;x+=4){let v=(audio.time[Math.floor(x/W*audio.time.length)]-128)/128,yy=y+v*(42+audio.level*96);if(!x)ctx.moveTo(x,yy);else ctx.lineTo(x,yy)}ctx.strokeStyle=alpha(c,.75);ctx.lineWidth=2.5;ctx.shadowBlur=18*st.glow;ctx.shadowColor=c;ctx.stroke()}
-function drawParticles(P,dt){let rate=(audio.bass*7+audio.treble*4+st.floor*1.5)*st.parts;for(let i=0;i<rate;i++){let a=Math.random()*TAU,r=Math.min(W,H)*(.08+Math.random()*.32);spawn(CX+Math.cos(a)*r,CY+Math.sin(a)*r,.35+audio.level,P[Math.floor(Math.random()*4)])}touch.p=Math.max(0,touch.p-dt*1.6);ctx.save();ctx.globalCompositeOperation='lighter';for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.age+=dt;if(p.age>=p.life){particles.splice(i,1);continue}p.vx*=Math.pow(.2,dt);p.vy*=Math.pow(.2,dt);p.x+=p.vx*dt;p.y+=p.vy*dt;let k=1-p.age/p.life;ctx.fillStyle=alpha(p.c,k*.86);ctx.shadowBlur=(10+p.size*5)*st.glow;ctx.shadowColor=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.size*(.45+k),0,TAU);ctx.fill()}if(touch.p>0){ctx.strokeStyle=alpha(P[0],touch.p*.8);ctx.lineWidth=2+touch.p*7;ctx.shadowBlur=42*st.glow;ctx.shadowColor=P[0];ctx.beginPath();ctx.arc(touch.x,touch.y,(1-touch.p)*130+20,0,TAU);ctx.stroke()}ctx.restore()}
-function vignette(){ctx.globalCompositeOperation='source-over';let g=ctx.createRadialGradient(CX,CY,Math.min(W,H)*.2,CX,CY,Math.max(W,H)*.72);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.62)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
-function loop(now){let dt=Math.min(.05,(now-last)/1000||.016);last=now;t+=dt;updateAudio(dt);let P=pal[preset];bg(P);if(preset==='nebula')nebula(P);else if(preset==='rings')rings(P);else if(preset==='tunnel')tunnel(P);else if(preset==='bars')bars(P);else aurora(P);drawParticles(P,dt);vignette();$('#mode').textContent=audio.mode;$('#level').textContent='level '+Math.round(audio.level*100)+'%';diag(`${audio.mode} | canvas ${W}x${H} | level ${Math.round(audio.level*100)}% | preset ${preset}`);requestAnimationFrame(loop)}requestAnimationFrame(loop);
-$('#mic').onclick=mic;$('#demo').onclick=demo;$('#boost').onclick=()=>{audio.level=1;audio.bass=1;touch.x=CX;touch.y=CY;touch.p=1;for(let i=0;i<80;i++)spawn(CX,CY,1.4,pal[preset][i%4]);toast('Force pulse')};$('#hide').onclick=()=>{$('#ui').classList.add('hiddenUi')};$('#wake').onclick=()=>{$('#ui').classList.remove('hiddenUi')};
-$$('.preset').forEach(b=>b.onclick=()=>{preset=b.dataset.p;localStorage.nvPreset=preset;$$('.preset').forEach(x=>x.classList.toggle('active',x.dataset.p===preset));toast(preset.toUpperCase())});$$('.preset').forEach(x=>x.classList.toggle('active',x.dataset.p===preset));
-for(const id of ['sens','glow','parts','floor'])$('#'+id).oninput=e=>{const key={sens:'sens',glow:'glow',parts:'parts',floor:'floor'}[id];st[key]=+e.target.value;localStorage['nv'+key[0].toUpperCase()+key.slice(1)]=st[key]};
-let sw=null;addEventListener('pointerdown',e=>{sw={x:e.clientX,y:e.clientY};touch={x:e.clientX,y:e.clientY,p:1,down:true};for(let i=0;i<22;i++)spawn(e.clientX,e.clientY,1.05,pal[preset][i%4])},{passive:false});addEventListener('pointermove',e=>{if(e.buttons||e.pressure){touch.x=e.clientX;touch.y=e.clientY}},{passive:false});addEventListener('pointerup',e=>{touch.down=false;if(sw){let dx=e.clientX-sw.x,dy=e.clientY-sw.y;if(Math.abs(dx)>90&&Math.abs(dx)>Math.abs(dy)*1.6){let a=['nebula','rings','tunnel','bars','aurora'],i=a.indexOf(preset);preset=a[(i+(dx<0?1:-1)+a.length)%a.length];localStorage.nvPreset=preset;$$('.preset').forEach(x=>x.classList.toggle('active',x.dataset.p===preset));toast(preset.toUpperCase())}}sw=null},{passive:false});
-addEventListener('error',e=>{diag('JS error: '+e.message);toast('Ошибка JS: '+e.message)});diag('canvas loop active; demo background should move now');})();
-</script>
-</body></html>
+  <canvas id="visualizer" aria-label="Музыкальный визуализатор"></canvas>
+
+  <div id="grain"></div>
+
+  <main id="ui" class="ui">
+    <section id="startPanel" class="glass panel start-panel">
+      <div class="brand">
+        <div class="orb-logo" aria-hidden="true"></div>
+        <div>
+          <h1>NEON<br><span>AUDIO VISUALIZER</span></h1>
+          <p>AMOLED music-reactive canvas для Samsung Tab. Микрофон, неон, частицы, волны и жесты.</p>
+        </div>
+      </div>
+
+      <div class="start-actions">
+        <button id="micBtn" class="primary">🎙 Включить микрофон</button>
+        <button id="demoBtn" class="secondary">✨ Демо-режим</button>
+        <button id="pulseBtn" class="secondary">⚡ Проверить canvas</button>
+      </div>
+
+      <p class="hint">Для микрофона открывай через HTTPS: GitHub Pages подходит. Если браузер спросит разрешение — нажми «Разрешить».</p>
+    </section>
+
+    <header class="topbar glass">
+      <div class="status">
+        <strong id="modeLabel">IDLE</strong>
+        <span id="levelLabel">level 0%</span><span id="debugLabel">boot</span>
+      </div>
+      <div class="ticker" id="ticker">TAP • CLAP • PLAY MUSIC NEAR THE TABLET • SWIPE TO CHANGE PRESET</div>
+      <button id="hideBtn" class="icon-btn" aria-label="Скрыть интерфейс">◎</button>
+    </header>
+
+    <nav class="dock glass">
+      <button class="preset active" data-preset="nebula">Nebula</button>
+      <button class="preset" data-preset="rings">Rings</button>
+      <button class="preset" data-preset="tunnel">Tunnel</button>
+      <button class="preset" data-preset="bars">Bars</button>
+      <button class="preset" data-preset="aurora">Aurora</button>
+    </nav>
+
+    <aside class="controls glass">
+      <label>
+        Sensitivity
+        <input id="sensitivity" type="range" min="0.5" max="3" value="1.25" step="0.05" />
+      </label>
+      <label>
+        Glow
+        <input id="glow" type="range" min="0" max="1" value="0.75" step="0.01" />
+      </label>
+      <label>
+        Particles
+        <input id="particles" type="range" min="0.2" max="1" value="0.85" step="0.01" />
+      </label>
+    </aside>
+
+    <button id="wakeBtn" class="wake hidden">Показать интерфейс</button>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="./src/main.js?v=3"></script>
+</body>
+</html>
